@@ -20,14 +20,16 @@ IP_GEOLOCATION_APIS = {
 # to this API will be executed
 def check_api():
     for api, link in IP_GEOLOCATION_APIS.items():
+        apis = []
+        print(apis)
         r = requests.get(link)
         try:
             data = r.json()
             if data and 'country' in data and len(data['country']):
-                return api
+                apis.append(api)
         except ValueError:
             pass
-    return 'none'
+    return apis if len(apis) > 0 else 'none'
 
 with DAG(dag_id='branch_dag', 
     default_args=default_args, 
